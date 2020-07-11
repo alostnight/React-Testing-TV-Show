@@ -4,8 +4,10 @@ import { render } from "@testing-library/react";
 
 test("re-renders with a list of episodes", () => {
   const { rerender, queryAllByTestId } = render(<Episodes episodes={[]} />);
-  const episodes = queryAllByTestId(/episode/gi);
+  expect(queryAllByTestId("episode")).toHaveLength(0);
+
   rerender(<Episodes error="" episodes={mockData} />);
+  expect(queryAllByTestId("episode")).toHaveLength(2);
 });
 
 const mockData = [

@@ -1,6 +1,6 @@
 import React from "react";
 import App from "./App";
-import { render, fireEvent } from "@testing-library/react";
+import { render, queryAllByAltText, waitFor } from "@testing-library/react";
 import { fetchShow as mockFetchShows } from "./api/fetchShow";
 
 jest.mock("./api/fetchShow");
@@ -77,5 +77,9 @@ const showData = {
 
 test("App fetches show data and renders", async () => {
   mockFetchShows.mockResolvedValueOnce(mockData);
-  const { rerender, getByTestId, getAllByTestId } = render(<App />);
+  const { rerender, getByText } = render(<App />);
+
+  await waitFor(() => {
+    expect(getByText("name")).toBeInTheDocument();
+  });
 });
